@@ -12,7 +12,7 @@ class ProductProvider with ChangeNotifier {
       _products = await ApiServices().fetchProducts();
       notifyListeners();
     } catch (e) {
-      print('Error al obtener los productos: $e');
+      print('Error at getting all products $e');
     }
   }  
   void updateProducts(Product newProduct) {

@@ -15,7 +15,7 @@ class CartScreen extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text('Carrito de Compras'),
+        title: Text('Cart'),
       ),
       body: cartItems.isEmpty
           ? Center(
@@ -24,7 +24,7 @@ class CartScreen extends StatelessWidget {
                 children: [
                   Icon(Icons.remove_shopping_cart, size: 64),
                   SizedBox(height: 16),
-                  Text('Tu carrito está vacío'),
+                  Text('Your cart is empty'),
                 ],
               ),
             )
@@ -43,7 +43,7 @@ class CartScreen extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text('Precio: \$${product.price.toStringAsFixed(2)}'),
-                      Text('Unidades: 1'), // Asume que se agrega 1 unidad por defecto
+                      Text('Quantity: 1'), // Asume que se agrega 1 unidad por defecto
                     ],
                   ),
                   trailing: IconButton( // Botón de eliminar
@@ -51,7 +51,7 @@ class CartScreen extends StatelessWidget {
                     onPressed: () {
                       cartProvider.removeProduct(product); // Eliminar el producto del carrito
                       ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBar(content: Text('Producto eliminado del carrito')),
+                        SnackBar(content: Text('Product deleted from the cart')),
                       );
                     },
                   ),
@@ -81,7 +81,7 @@ class CartScreen extends StatelessWidget {
                 );
               } else {
                 ScaffoldMessenger.of(context).showSnackBar(
-                  SnackBar(content: Text('El carrito está vacío')),
+                  SnackBar(content: Text('Cart is empty')),
                 );
               }
             },

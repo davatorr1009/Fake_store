@@ -8,64 +8,72 @@ class ProductDetailScreen extends StatelessWidget {
 
   ProductDetailScreen({required this.product});
 
-    @override
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(product.title),
+        backgroundColor: Colors.white,
+        elevation: 0, // Elimina la sombra de la AppBar
+        leading: IconButton(
+          icon: Icon(Icons.arrow_back, color: Colors.black), // Flecha de retroceso negra
+          onPressed: () => Navigator.of(context).pop(),
+        ),
       ),
       body: SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.all(16.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-               // Imagen del producto
-              Image.network(
-                product.image,
-                height: 200,
-                width: double.infinity,
-                fit: BoxFit.cover,
+          child: Card( // Utiliza un Card para contener los detalles del producto
+            elevation: 2, // Agrega una ligera sombra al Card
+            child: Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  // Imagen del producto
+                  Image.network(
+                    product.image,
+                    height: 200,
+                    width: double.infinity,
+                    fit: BoxFit.contain,
+                  ),
+                  SizedBox(height: 16),
+                  // Nombre del producto
+                  Text(
+                    product.title,
+                    style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                  ),
+                  SizedBox(height: 8),
+                  // Precio del producto
+                  Text(
+                    '\$${product.price.toStringAsFixed(2)}',
+                    style: TextStyle(fontSize: 16, color: Colors.grey[600]),
+                  ),
+                  SizedBox(height: 16),
+                  // Descripción del producto
+                  Text(
+                    'Description',
+                    style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                  ),
+                  SizedBox(height: 8),
+                  Text(
+                    product.description,
+                    style: TextStyle(fontSize: 16),
+                  ),
+                ],
               ),
-              SizedBox(height: 16),
-              // Título del producto
-              Text(
-                product.title,
-                style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
-              ),
-              SizedBox(height: 8),
-              // Precio del producto
-              Text(
-                '\$${product.price.toStringAsFixed(2)}',
-                style: TextStyle(fontSize: 18),
-              ),
-              SizedBox(height: 16),
-              // Categoría del producto
-              Text(
-                'Categoría: ${product.category}',
-                style: TextStyle(fontSize: 16),
-              ),
-              SizedBox(height: 8),
-              // Descripción del producto
-              Text(
-                'Descripción:',
-                style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
-              ),
-              SizedBox(height: 8),
-              Text(product.description),
-              
-              ElevatedButton( // Botón para agregar al carrito
-                onPressed: () {
-                  Provider.of<CartProvider>(context, listen: false).addProduct(product);
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    SnackBar(content: Text('Producto agregado al carrito')),
-                  );
-                },
-                child: Text('Agregar al Carrito'),
-              ),
-            ],
+            ),
           ),
         ),
+      ),
+      floatingActionButton: FloatingActionButton( // Botón flotante "Add to Cart"
+        onPressed: () {
+          Provider.of<CartProvider>(context, listen: false).addProduct(product);
+          ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('Product added to the cart')),
+          );
+        },
+        backgroundColor: Colors.black, // Color de fondo del botón
+        child: Icon(Icons.add_shopping_cart, color: Colors.white), // Ícono blanco
       ),
     );
   }

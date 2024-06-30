@@ -30,7 +30,7 @@ class _AddProductScreenState extends State<AddProductScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Agregar Producto'),
+        title: Text('Add a new Product'),
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -40,33 +40,60 @@ class _AddProductScreenState extends State<AddProductScreen> {
             children: [
               TextFormField(
                 controller: _titleController,
-                decoration: InputDecoration(labelText: 'Título'),
-                validator: (value) => value!.isEmpty ? 'Este campo es requerido' : null,
+                decoration: InputDecoration(labelText: 'Título',hintText: 'Ej: iPhone 9', ),
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return 'Please enter a valid title';
+                  }
+                  return null; 
+                },
               ),
               TextFormField(
                 controller: _priceController,
-                decoration: InputDecoration(labelText: 'Precio'),
+                decoration: InputDecoration(labelText: 'Price',hintText: '250.64', ),
                 keyboardType: TextInputType.number,
-                validator: (value) => value!.isEmpty ? 'Este campo es requerido' : null,
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return 'Please enter a price';
+                  }
+                  if (double.tryParse(value) == null) {
+                    return 'Please enter a valid number';
+                  }
+                  if (double.parse(value) <= 0) {
+                    return 'The price should be positive';
+                  }
+                  return null;
+                },
               ),
               TextFormField(
                 controller: _descriptionController,
-                decoration: InputDecoration(labelText: 'Descripción'),
-                maxLines: null,
+                decoration: InputDecoration(labelText: 'Description' ),
+                maxLines: null, // Permite múltiples líneas
               ),
               TextFormField(
                 controller: _imageController,
-                decoration: InputDecoration(labelText: 'URL de la Imagen'),
+                decoration: InputDecoration(labelText: 'Image',hintText: 'Image URL', ),
                 keyboardType: TextInputType.url,
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return 'Please enter an URL';
+                  }
+                  //validación regular para texto
+                  return null;
+                },
               ),
               TextFormField(
                 controller: _categoryController,
-                decoration: InputDecoration(labelText: 'Categoría'),
-                validator: (value) => value!.isEmpty ? 'Este campo es requerido' : null,
+                decoration: InputDecoration(labelText: 'Category',hintText: "Men's Clothing", ),
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return 'Please enter a Category';
+                  }
+                  return null;
+                },
               ),
               ElevatedButton(
-                onPressed: _addProduct,           
-                
+                onPressed: _addProduct, 
                 child: Text('Guardar'),
               ),
             ],

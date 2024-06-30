@@ -31,55 +31,76 @@ class _LoginScreenState extends State<LoginScreen> {
       } else  {
         // Credenciales incorrectas: Muestra un mensaje de error
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Credenciales incorrectas')),
+          SnackBar(content: Text('')),
         );
       }
     }
   }
 
-  @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Login'),
-      ),
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Form(
-          key: _formKey,
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              TextFormField(
-                controller: _usernameController,
-                decoration: InputDecoration(labelText: 'Usuario'),
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Por favor ingresa tu usuario';
-                  }
-                  return null;
-                },
-              ),
-              TextFormField(
-                controller: _passwordController,
-                decoration: InputDecoration(labelText: 'Contraseña'),
-                obscureText: true,
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Por favor ingresa tu contraseña';
-                  }
-                  return null;
-                },
-              ),
-              SizedBox(height: 24),
-              ElevatedButton(
-                onPressed: _login,
-                child: Text('Iniciar Sesión'),
-              ),
-            ],
+      body: Center(
+        child: SingleChildScrollView(
+          child: Padding(
+            padding: const EdgeInsets.all(24.0),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Image.asset(
+                  '../../assets/logo.png',
+                  height: 100,
+                ),
+                SizedBox(height: 16),
+                Text(
+                  'FakeStore',
+                  style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+                ),
+                SizedBox(height: 32),
+                Text(
+                  'Welcome Back',
+                  style: TextStyle(fontSize: 18),
+                ),
+                SizedBox(height: 16),
+                Form( // Formulario de login
+                  key: _formKey,
+                  child: Column(
+                    children: <Widget>[
+                      TextFormField(
+                        controller: _usernameController,
+                        decoration: InputDecoration(labelText: 'User'),
+                        validator: (value) {
+                          if (value == null || value.isEmpty) {
+                            return 'Please enter an username';
+                          }
+                          return null;
+                        },
+                      ),
+                      TextFormField(
+                        controller: _passwordController,
+                        decoration: InputDecoration(labelText: 'Password'),
+                        obscureText: true,
+                        validator: (value) {
+                          if (value == null || value.isEmpty) {
+                            return 'Please enter a password';
+                          }
+                          return null;
+                        },
+                      ),
+                      SizedBox(height: 24),
+                      ElevatedButton(
+                        onPressed: _login,
+                        child: Text('Sign Up'),
+                      ),
+                    ],
+                  ),
+                ), // Cierra el Form aquí
+              ],
+            ),
           ),
         ),
       ),
     );
   }
 }
+
+  

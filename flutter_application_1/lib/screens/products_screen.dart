@@ -5,6 +5,7 @@ import 'package:flutter_application_1/screens/cart_screen.dart';
 import 'package:flutter_application_1/screens/products_detail_screen.dart';
 import 'package:provider/provider.dart';
 import '../models/product.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 //import '../models/globals.dart'; 
 
 class ProductsScreen extends StatefulWidget {
@@ -17,7 +18,7 @@ class ProductsScreen extends StatefulWidget {
 }
 
 class _ProductsScreenState extends State<ProductsScreen> {
-  List<Product> _products = [];
+  //List<Product> _products = [];
 
  @override
   void initState() {
@@ -26,11 +27,10 @@ class _ProductsScreenState extends State<ProductsScreen> {
 }
 
   @override
- @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Productos'),
+        title: Text('Products'),
         actions: [
           IconButton(
             icon: Icon(Icons.shopping_cart),
@@ -45,7 +45,7 @@ class _ProductsScreenState extends State<ProductsScreen> {
           ),
         ],
       ),
-      body: Consumer<ProductProvider>( // El consumer aquí permite actualizar la lista de productos
+       body: Consumer<ProductProvider>(
         builder: (context, productProvider, child) {
           final products = productProvider.products;
           return ListView.builder(
@@ -53,15 +53,24 @@ class _ProductsScreenState extends State<ProductsScreen> {
             itemBuilder: (context, index) {
               final product = products[index];
               return ListTile(
-                onTap: () { 
-                  Navigator.push(
+                onTap: () { Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => ProductDetailScreen(product: product),
+                      builder: (context) => ProductDetailScreen(product: product),),
+                  ); },
+                leading: Container(
+                  width: 80,
+                  height: 80,
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(8),
+                    child: CachedNetworkImage( // Usa CachedNetworkImage directamente
+                      imageUrl: product.image,
+                      placeholder: (context, url) => CircularProgressIndicator(),
+                      errorWidget: (context, url, error) => Icon(Icons.error),
+                      fit: BoxFit.contain,
                     ),
-                  );
-                },
-                leading: Image.network(product.image),
+                  ),
+                ),
                 title: Text(product.title),
                 subtitle: Text('\$${product.price.toStringAsFixed(2)}'),
               );

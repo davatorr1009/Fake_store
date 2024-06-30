@@ -32,7 +32,7 @@ class ApiServices {
       final List<dynamic> jsonList = jsonDecode(response.body);
       return jsonList.map((productJson) => Product.fromJson(productJson)).toList();
     } else {
-      throw Exception('Error al obtener los productos');
+      throw Exception('Error at uploading all products');
     }
   }
   Future<Product> addProduct(Product product) async {
@@ -55,10 +55,10 @@ class ApiServices {
          = jsonDecode(response.body);
         return Product.fromJson(json);
       } else {
-        throw Exception('Error al agregar el producto: ${response.statusCode}');
+        throw Exception('Error while adding product: ${response.statusCode}');
       }
     } catch (e) {
-      print('Error en addProduct: $e');
+      print('Error while adding product: $e');
       rethrow;
     }
   }
