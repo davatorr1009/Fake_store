@@ -31,7 +31,7 @@ class _LoginScreenState extends State<LoginScreen> {
       } else  {
         // Credenciales incorrectas: Muestra un mensaje de error
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('')),
+          SnackBar(content: Text('Incorrect password or user.\nPlease try again')),
         );
       }
     }

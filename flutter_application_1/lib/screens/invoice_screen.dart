@@ -110,7 +110,7 @@ class InvoiceScreen extends StatelessWidget {
                 ),
                 onPressed: () {
                   cartProvider.clearCart();
-                  Navigator.popUntil(context, ModalRoute.withName('/products'));
+                  Navigator.of(context).pop();
                 },
                 child: Text(
                   'Confirm Payment',
