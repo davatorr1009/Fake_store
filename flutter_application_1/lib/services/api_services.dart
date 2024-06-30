@@ -35,7 +35,34 @@ class ApiServices {
       throw Exception('Error al obtener los productos');
     }
   }
+  Future<Product> addProduct(Product product) async {
+    try {
+      //ApiServices apiServices = new ApiServices();
+      final response = await http.post(
+        Uri.parse('$baseUrl/products'),
+        headers: {'Content-Type': 'application/json'},
+        body: jsonEncode({
+          'title': product.title,
+          'price': product.price,
+          'description': product.description,
+          'image': product.image,
+          'category': product.category,
+        }),
+      );
 
+      if (response.statusCode == 200) {
+        final Map<String, dynamic> json
+         = jsonDecode(response.body);
+        return Product.fromJson(json);
+      } else {
+        throw Exception('Error al agregar el producto: ${response.statusCode}');
+      }
+    } catch (e) {
+      print('Error en addProduct: $e');
+      rethrow;
+    }
+  }
+}
    /*Future<List<Product>> fetchCartByUserId(int userId) async {
     final response = await http.get(Uri.parse('$baseUrl/carts?userId=$userId')); // Filtrar por userId
 
@@ -67,4 +94,3 @@ class ApiServices {
 }*/
 
 
-}

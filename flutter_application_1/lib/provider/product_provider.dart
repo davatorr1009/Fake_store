@@ -15,8 +15,8 @@ class ProductProvider with ChangeNotifier {
       print('Error al obtener los productos: $e');
     }
   }  
-  void addProduct(Product product){
-    _products.add(product);
+  void updateProducts(Product newProduct) {
+    _products.add(newProduct);
     notifyListeners();
   }
 
@@ -24,4 +24,5 @@ class ProductProvider with ChangeNotifier {
     _products.remove(product);
     notifyListeners();
   }
+  
 }
